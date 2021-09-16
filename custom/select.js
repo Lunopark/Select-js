@@ -1,15 +1,16 @@
 const getTemplate = (data = [], placeholder) => {
     const counter = 0
     const text = placeholder ?? 'Код ОКРБ'
+    const user = 'Поставщика'
     const items = data.map(item => {
         return `
-        <li class="select_item" data-type="item" data-id="${item.id}">${item.value}</li>
+        <li class="select_item" data-type="item" data-id="${item.id}"><i class="far fa-square" data-type="square" style="color: #23458A"></i> ${item.value}</li>
         `
     })
     return `
     <div class="up">
-    <h3 class="h_title">Тендеры в роли
-    <span class="h_span">Показать выбранное( ${counter} )</span>
+    <h3 class="h_title">Тендеры в роли ${user}
+    <span class="h_span" data-type="count">Показать выбранное (${counter})</span>
     </h3>
     </div>
     <div class="select_title" data-type="input">
@@ -42,13 +43,14 @@ export class Select {
     #setup() {
         this.clickHandler = this.clickHandler.bind(this)
         this.$el.addEventListener('click', this.clickHandler)
+        this.$square = this.$el.querySelector('[data-type="square"]')
         this.$value = this.$el.querySelector('[data-type="value"]')
     }
 
     clickHandler(event) {
         const {type} = event.target.dataset
         
-        if (type === 'input') {
+        if (type === 'input' || type === 'count') {
             this.toggle()
         }
         else if (type === 'item') {
@@ -70,10 +72,15 @@ export class Select {
         this.$value.textContent = this.current.value
         this.$el.querySelectorAll('[data-type="item"]').forEach(el => {
             el.classList.remove('selected')
+            // this.$user = 'Заказчика'
+            // this.$square.classList.remove('far fa-square')
+            // this.$square.classList.add('fas fa-check-square')
+            // this.$counter++
         });
         this.$el.querySelector(`[data-id="${id}"]`).classList.add('selected')
+        
         this.options.onSelect ? this.options.onSelect(this.current) : null
-
+        
         this.close()
     }
 

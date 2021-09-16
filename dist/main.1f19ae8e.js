@@ -142,10 +142,11 @@ var getTemplate = function getTemplate() {
   var placeholder = arguments.length > 1 ? arguments[1] : undefined;
   var counter = 0;
   var text = placeholder !== null && placeholder !== void 0 ? placeholder : 'Код ОКРБ';
+  var user = 'Поставщика';
   var items = data.map(function (item) {
-    return "\n        <li class=\"select_item\" data-type=\"item\" data-id=\"".concat(item.id, "\">").concat(item.value, "</li>\n        ");
+    return "\n        <li class=\"select_item\" data-type=\"item\" data-id=\"".concat(item.id, "\"><i class=\"far fa-square\" data-type=\"square\" style=\"color: #23458A\"></i> ").concat(item.value, "</li>\n        ");
   });
-  return "\n    <div class=\"up\">\n    <h3 class=\"h_title\">\u0422\u0435\u043D\u0434\u0435\u0440\u044B \u0432 \u0440\u043E\u043B\u0438\n    <span class=\"h_span\">\u041F\u043E\u043A\u0430\u0437\u0430\u0442\u044C \u0432\u044B\u0431\u0440\u0430\u043D\u043D\u043E\u0435( ".concat(counter, " )</span>\n    </h3>\n    </div>\n    <div class=\"select_title\" data-type=\"input\">\n        <span data-type=\"value\">").concat(text, "</span>\n    </div>\n    <div class=\"select_drop\">\n        <ul class=\"select_list\">\n            ").concat(items.join(''), "\n        </ul>\n    </div>\n");
+  return "\n    <div class=\"up\">\n    <h3 class=\"h_title\">\u0422\u0435\u043D\u0434\u0435\u0440\u044B \u0432 \u0440\u043E\u043B\u0438 ".concat(user, "\n    <span class=\"h_span\" data-type=\"count\">\u041F\u043E\u043A\u0430\u0437\u0430\u0442\u044C \u0432\u044B\u0431\u0440\u0430\u043D\u043D\u043E\u0435 (").concat(counter, ")</span>\n    </h3>\n    </div>\n    <div class=\"select_title\" data-type=\"input\">\n        <span data-type=\"value\">").concat(text, "</span>\n    </div>\n    <div class=\"select_drop\">\n        <ul class=\"select_list\">\n            ").concat(items.join(''), "\n        </ul>\n    </div>\n");
 };
 
 var _render = /*#__PURE__*/new WeakSet();
@@ -174,7 +175,7 @@ var Select = /*#__PURE__*/function () {
     value: function clickHandler(event) {
       var type = event.target.dataset.type;
 
-      if (type === 'input') {
+      if (type === 'input' || type === 'count') {
         this.toggle();
       } else if (type === 'item') {
         var id = event.target.dataset.id;
@@ -201,7 +202,10 @@ var Select = /*#__PURE__*/function () {
       this.selectId = id;
       this.$value.textContent = this.current.value;
       this.$el.querySelectorAll('[data-type="item"]').forEach(function (el) {
-        el.classList.remove('selected');
+        el.classList.remove('selected'); // this.$user = 'Заказчика'
+        // this.$square.classList.remove('far fa-square')
+        // this.$square.classList.add('fas fa-check-square')
+        // this.$counter++
       });
       this.$el.querySelector("[data-id=\"".concat(id, "\"]")).classList.add('selected');
       this.options.onSelect ? this.options.onSelect(this.current) : null;
@@ -246,6 +250,7 @@ function _render2() {
 function _setup2() {
   this.clickHandler = this.clickHandler.bind(this);
   this.$el.addEventListener('click', this.clickHandler);
+  this.$square = this.$el.querySelector('[data-type="square"]');
   this.$value = this.$el.querySelector('[data-type="value"]');
 }
 },{}],"C:/Users/rosty/AppData/Roaming/npm/node_modules/parcel-bundler/src/builtins/bundle-url.js":[function(require,module,exports) {
@@ -381,7 +386,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "61274" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "51729" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};
